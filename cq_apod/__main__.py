@@ -56,7 +56,9 @@ def image_of_the_day():
 
 def send_sun():
     config = load_config()
-    image_msg = "[CQ:image,file=https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0193.jpg]"
+    image_msg = "[CQ:image," \
+                "file=https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0193.jpg," \
+                "cache=0]"
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], image_msg)
 
 def main():
