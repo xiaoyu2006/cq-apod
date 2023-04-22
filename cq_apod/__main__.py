@@ -1,4 +1,5 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
+from pytz import timezone
 import urllib.request
 import json
 import sys
@@ -53,19 +54,10 @@ def image_of_the_day():
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], image_msg)
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], content_json["explanation"])
 
-def send_sun(api, group):
+def send_sun():
+    config = load_config()
     image_msg = "[CQ:image,file=https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0193.jpg]"
-    cq_send_message(api, group, image_msg)
-
-def morning(): 
-    config = load_config()
-    cq_send_message(config["CQ_API"], config["CQ_GROUP"], "Hello from the Sun!")
-    send_sun(config["CQ_API"], config["CQ_GROUP"])
-
-def evening(): 
-    config = load_config()
-    cq_send_message(config["CQ_API"], config["CQ_GROUP"], "Goodbye from the Sun!")
-    send_sun(config["CQ_API"], config["CQ_GROUP"])
+    cq_send_message(config["CQ_API"], config["CQ_GROUP"], image_msg)
 
 def main():
     args = sys.argv[1:]
@@ -73,11 +65,10 @@ def main():
         image_of_the_day()
         send_sun()
         return
-    sched = BlockingScheduler()
+    sched = BlockingScheduler(timezone=timezone("Asia/Shanghai"))
     # every hour to ensure images delivered on time
     sched.add_job(image_of_the_day, 'cron', minute=0)
-    sched.add_job(morning, 'cron', hour=6)
-    sched.add_job(evening, 'cron', hour=19)
+    sched.add_job(send_sun, 'cron', hour='0,6,12,18')
     sched.start()
 
 
