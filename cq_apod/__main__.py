@@ -48,11 +48,12 @@ def image_of_the_day():
         return
     print("New image of the day! " + content_json["date"])
 
-    cq_send_message(config["CQ_API"], config["CQ_GROUP"], "APoD " + content_json["date"])
+    news_msg = "[CQ:at,qq=all] Astronomy Picture of the Day: " + content_json["date"]
+    cq_send_message(config["CQ_API"], config["CQ_GROUP"], news_msg)
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], content_json["title"])
+    cq_send_message(config["CQ_API"], config["CQ_GROUP"], content_json["explanation"])
     image_msg = "[CQ:image,file=" + content_json["url"] + "]"
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], image_msg)
-    cq_send_message(config["CQ_API"], config["CQ_GROUP"], content_json["explanation"])
 
 def send_sun():
     config = load_config()
