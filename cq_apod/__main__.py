@@ -8,13 +8,23 @@ def load_config():
         return json.load(f)
 
 def is_outdated(new_date):
-    with open("last_image_date.txt", "+w") as f:
+    content = ""
+    try:
+        f = open("last_image_date.txt", "r")
         content = f.read()
-        if content == new_date:
-            return False
-        else:
-            f.write(new_date)
-            return True
+        f.close()
+    except FileNotFoundError:
+        f = open("last_image_date.txt", "w")
+        f.write(new_date)
+        f.close()
+        return True
+    if new_date == content:
+        return False
+    f = open("last_image_date.txt", "w")
+    f.write(new_date)
+    f.close()
+    return True
+
         
 def cq_send_message(api, group, message):
     safe_msg = urllib.parse.quote(message)
