@@ -161,3 +161,4 @@ cython_debug/
 
 # Custom
 last_image_date.txt
+config.json
