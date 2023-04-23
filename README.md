@@ -1,1 +1,4 @@
-# CQ-HTTP NASA APOD Bot
+# CQ-HTTP NASA Notification Bot
+
+- NASA APoD
+- NASA SDO
