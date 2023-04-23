@@ -1,6 +1,7 @@
 """SDO AIA sender."""
 
 import random
+import datetime
 from .common import cq_send_message, cq_send_file, load_config
 
 # Checklist:
@@ -84,9 +85,10 @@ def send_sdo():
         "Sun in the past 48 hours from " + sdo["name"],
     )
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], sdo["description"])
+    name_and_date = sdo["name"].replace(" ", "-") + "_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
     cq_send_file(
         config["CQ_API"],
         config["CQ_GROUP"],
         sdo["url"],
-        sdo["name"].capitalize().replace(" ", "_") + ".mp4",
+        name_and_date,
     )
