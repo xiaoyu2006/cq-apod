@@ -64,6 +64,30 @@ Wavelength: 335 angstroms (0.0000000335 m) = Extreme Ultraviolet
 Primary ions seen: 15 times ionized iron (Fe XVI)
 Characteristic temperature: 2.8 million K (5 million F)""",
     },
+    {
+        "name": "SDO AIA 094",
+        "url": "https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0094.mp4",
+        "description": """Where: Flaring regions of the corona
+Wavelength: 94 angstroms (0.0000000094 m) = Extreme Ultraviolet/soft X-rays
+Primary ions seen: 17 times ionized iron (Fe XVIII)
+Characteristic temperature: 6 million K (10.8 million F)""",
+    },
+    {
+        "name": "SDO AIA 1600",
+        "url": "https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_1600.mp4",
+        "description": """Where: Transition region and upper photosphere
+Wavelength: 1600 angstroms (0.00000016 m) = Far Ultraviolet
+Primary ions seen: thrice ionized carbon (C IV) and Continuum
+Characteristic temperatures: 6,000 K (11,000 F), and 100,000 K (180,000 F)""",
+    },
+    {
+        "name": "SDO AIA 1700",
+        "url": "https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_1700.mp4",
+        "description": """Where: Temperature minimum and photosphere
+Wavelength: 1700 angstroms (0.00000017 m) = Far Ultraviolet
+Primary ions seen: Continuum
+Characteristic temperature: 6,000 K (11,000 F)"""
+    },
 ]
 
 TOTAL_SDO_VIDEOS = len(SDO_VIDEOS)
