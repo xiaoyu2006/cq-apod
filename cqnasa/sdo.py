@@ -79,16 +79,18 @@ def get_sdo():
 def send_sdo():
     config = load_config()
     sdo = get_sdo()
+    name_and_date = sdo["name"].replace(" ", "-") + "_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
+    r = cq_send_file(
+        config["CQ_API"],
+        config["CQ_GROUP"],
+        sdo["url"],
+        name_and_date,
+    )
+    if not r:
+        return
     cq_send_message(
         config["CQ_API"],
         config["CQ_GROUP"],
         "Sun in the past 48 hours from " + sdo["name"],
     )
     cq_send_message(config["CQ_API"], config["CQ_GROUP"], sdo["description"])
-    name_and_date = sdo["name"].replace(" ", "-") + "_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
-    cq_send_file(
-        config["CQ_API"],
-        config["CQ_GROUP"],
-        sdo["url"],
-        name_and_date,
-    )

@@ -36,10 +36,11 @@ def cq_send_file(api, group, file_url, file_name):
         retry -= 1
     if file is None:
         print("Failed to download file: " + file_url)
-        return
+        return False
     url = "http://" + api + "/upload_group_file?group_id=" + group + \
           "&file=" + urllib.parse.quote(file) + \
           "&name=" + urllib.parse.quote(file_name)
     print("Sending file to CQ: " + url)
     result = urllib.request.urlopen(url).read()
     print("Result: " + result.decode("utf-8"))
+    return True
