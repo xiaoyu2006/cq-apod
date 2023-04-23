@@ -1,20 +1,33 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from pytz import timezone
-import sys
+import argparse
 
+from .common import load_config
 from .apod import send_apod
 from .sdo import send_sdo
 
+
 def main():
-    args = sys.argv[1:]
-    if args and args[0] == "test":
+    parser = argparse.ArgumentParser(
+        prog="cqnasa",
+        description="Send NASA images to QQ groups.",
+    )
+    parser.add_argument(
+        "-t",
+        "--test",
+        action="store_true",
+        help="Send images immediately.",
+    )
+    args = parser.parse_args()
+    if args.test:
         send_apod()
         send_sdo()
         return
-    sched = BlockingScheduler(timezone=timezone("Asia/Shanghai"))
+    config = load_config()
+    sched = BlockingScheduler(timezone=timezone(config["TIMEZONE"]))
     # every hour to ensure images delivered on time
-    sched.add_job(send_apod, 'cron', minute=0)
-    sched.add_job(send_sdo, 'cron', hour='0,6,12,18')
+    sched.add_job(send_apod, "cron", minute=0)
+    sched.add_job(send_sdo, "cron", hour="0,6,12,18")
     sched.start()
 
 

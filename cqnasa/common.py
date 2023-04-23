@@ -1,5 +1,6 @@
 import json
-import urllib
+import urllib.request
+import urllib.parse
 
 
 def load_config():
@@ -24,3 +25,19 @@ def cq_download_file(api, file_url):
     if result_json["status"] == "failed":
         return None
     return result_json["data"]["file"]
+
+def cq_send_file(api, group, file_url):
+    file = None
+    retry = 3
+    while retry > 0:
+        file = cq_download_file(api, file_url)
+        if file is not None:
+            break
+        retry -= 1
+    if file is None:
+        print("Failed to download file: " + file_url)
+        return
+    url = "http://" + api + "/upload_group_file?group_id=" + group + "&file=" + file
+    print("Sending file to CQ: " + url)
+    result = urllib.request.urlopen(url).read()
+    print("Result: " + result.decode("utf-8"))

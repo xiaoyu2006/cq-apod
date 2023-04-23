@@ -1,7 +1,8 @@
 """Image of the day from NASA APOD API"""
 
 import json
-import urllib
+import urllib.request
+import urllib.parse
 
 from .common import cq_send_message, load_config
 
