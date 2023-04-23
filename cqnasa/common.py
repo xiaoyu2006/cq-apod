@@ -26,7 +26,7 @@ def cq_download_file(api, file_url):
         return None
     return result_json["data"]["file"]
 
-def cq_send_file(api, group, file_url):
+def cq_send_file(api, group, file_url, file_name):
     file = None
     retry = 3
     while retry > 0:
@@ -37,7 +37,9 @@ def cq_send_file(api, group, file_url):
     if file is None:
         print("Failed to download file: " + file_url)
         return
-    url = "http://" + api + "/upload_group_file?group_id=" + group + "&file=" + file
+    url = "http://" + api + "/upload_group_file?group_id=" + group + \
+          "&file=" + urllib.parse.quote(file) + \
+          "&name=" + urllib.parse.quote(file_name)
     print("Sending file to CQ: " + url)
     result = urllib.request.urlopen(url).read()
     print("Result: " + result.decode("utf-8"))
